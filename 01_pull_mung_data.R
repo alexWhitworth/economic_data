@@ -12,8 +12,10 @@ fredr::fredr_set_key("5080ca44da1ccf74fda114d6f9650645")
 #----------------------------
 # Units:  Thousands of Persons, Seasonally Adjusted
 emp <- fredr(series_id = "PAYEMS", observation_start= as.Date("2003-01-01"), units= "lin")
-# Units: Monthly  Rate, Seasonally Adjusted
-quits <- fredr(series_id = "JTSQUR", observation_start= as.Date("2003-01-01"), units= "lin")
+# Units: Millions of Units, Seasonally Adjusted Annual Rate
+autos <- fredr(series_id = "LAUTOSA", observation_start= as.Date("2003-01-01"), units= "lin")
+hw_trucks <- fredr(series_id = "HTRUCKSSAAR", observation_start= as.Date("2003-01-01"), units= "lin")
+lw_trucks <- fredr(series_id = "LTRUCKSA", observation_start= as.Date("2003-01-01"), units= "lin")
 # Units: Dollars per Hour, Seasonally Adjusted
 avg_earn <- fredr(series_id = "CES0500000003", observation_start= as.Date("2003-01-01"), units= "lin")
 # Units:  Index 1982-1984=100, Seasonally Adjusted
@@ -46,7 +48,6 @@ permits <- fredr(series_id = "PERMIT", observation_start= as.Date("2003-01-01"),
 # combine series into single dataset
 dat <- list(
   data.table(date= emp$date, series= "nonfarm_payrolls", value= emp$value)
-  , data.table(date= quits$date, series= "quit_rate", value= quits$value)
   , data.table(date= avg_earn$date, series= "hrly_earnings", value= avg_earn$value)
   , data.table(date= CPI_u$date, series= "cpi_u", value= CPI_u$value)
   , data.table(date= real_inc$date, series= "real_income", value= real_inc$value)
@@ -61,6 +62,9 @@ house_dat <- list(
   , data.table(date= SFH_new$date, series= "SFH_sold", value= SFH_new$value)
   #, data.table(date= mort_pmt_pct_dispinc$date, series= "mortgage_pmt_pct", value= mort_pmt_pct_dispinc$value)
   , data.table(date= permits$date, series= "housing_permits", value= permits$value)
+  , data.table(date= autos$date, series= "autos", value= autos$value)
+  , data.table(date= lw_trucks$date, series= "lw_trucks", value= lw_trucks$value)
+  , data.table(date= hw_trucks$date, series= "hw_trucks", value= hw_trucks$value)
 )
 
 dat <- rbindlist(lapply(dat, function(l) {
@@ -81,5 +85,8 @@ house_dat <- rbindlist(lapply(house_dat, function(l) {
   return(l)
 }))
 
-rm(avg_earn, CPI_u, emp, housing_starts, indpro, quarterly_yoy, quits, real_inc, real_inc_disposable, 
-   real_PCE, retail_sales, SFH_new, mort_pmt_pct_dispinc)
+vehicle_dat <- house_dat[series %in% c('autos', 'lw_trucks', 'hw_trucks'), ]
+house_dat <- house_dat[!(series %in% c('autos', 'lw_trucks', 'hw_trucks')), ]
+
+rm(avg_earn, CPI_u, emp, indpro, quarterly_yoy, autos, lw_trucks, hw_trucks, real_inc, real_PCE, 
+   real_inc_disposable, retail_sales, housing_starts, SFH_new, permits) # mort_pmt_pct_dispinc
