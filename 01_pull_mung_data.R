@@ -16,6 +16,7 @@ emp <- fredr(series_id = "PAYEMS", observation_start= as.Date("2003-01-01"), uni
 autos <- fredr(series_id = "LAUTOSA", observation_start= as.Date("2003-01-01"), units= "lin")
 hw_trucks <- fredr(series_id = "HTRUCKSSAAR", observation_start= as.Date("2003-01-01"), units= "lin")
 lw_trucks <- fredr(series_id = "LTRUCKSA", observation_start= as.Date("2003-01-01"), units= "lin")
+lw_vehicles <- fredr(series_id = "ALTSALES", observation_start= as.Date("2003-01-01"), units= "lin")
 # Units: Dollars per Hour, Seasonally Adjusted
 avg_earn <- fredr(series_id = "CES0500000003", observation_start= as.Date("2003-01-01"), units= "lin")
 # Units:  Index 1982-1984=100, Seasonally Adjusted
@@ -65,6 +66,7 @@ house_dat <- list(
   , data.table(date= autos$date, series= "autos", value= autos$value)
   , data.table(date= lw_trucks$date, series= "lw_trucks", value= lw_trucks$value)
   , data.table(date= hw_trucks$date, series= "hw_trucks", value= hw_trucks$value)
+  , data.table(date= lw_vehicles$date, series= "lw_vehicles", value= lw_vehicles$value)
 )
 
 dat <- rbindlist(lapply(dat, function(l) {
@@ -85,8 +87,8 @@ house_dat <- rbindlist(lapply(house_dat, function(l) {
   return(l)
 }))
 
-vehicle_dat <- house_dat[series %in% c('autos', 'lw_trucks', 'hw_trucks'), ]
-house_dat <- house_dat[!(series %in% c('autos', 'lw_trucks', 'hw_trucks')), ]
+vehicle_dat <- house_dat[series %in% c('autos', 'lw_trucks', 'hw_trucks', 'lw_vehicles'), ]
+house_dat <- house_dat[!(series %in% c('autos', 'lw_trucks', 'hw_trucks', 'lw_vehicles')), ]
 
 rm(avg_earn, CPI_u, emp, indpro, quarterly_yoy, autos, lw_trucks, hw_trucks, real_inc, real_PCE, 
-   real_inc_disposable, retail_sales, housing_starts, SFH_new, permits) # mort_pmt_pct_dispinc
+   real_inc_disposable, retail_sales, housing_starts, SFH_new, permits, lw_vehicles) # mort_pmt_pct_dispinc

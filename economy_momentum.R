@@ -84,7 +84,7 @@ dts2 <- sort(seq.Date(dt_range[2], as.Date("2015-01-01"), "-1 quarter"))
 y_lims <- range(vehicle_dat[,quarterly_yoy], na.rm= TRUE)
 
 ggplot_series(vehicle_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.75), min(y_lims[2], 1.4)),
+              y_range= c(max(y_lims[1], 0.75), min(y_lims[2], 1.275)),
               facet= "grid") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Vehicle Sales")
 
