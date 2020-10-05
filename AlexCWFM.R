@@ -51,11 +51,8 @@ endDate <- NULL # 2030-10
 portAlex <- getPortfolio(c("BA", "DE", "HON", "LMT"), begDate= begDate, type='Ad')
 portCWMF <- getPortfolio(c("AVB", "ESS", "EQR", "SUI"), begDate= begDate, type='Ad')
 
-returnsAlex <- dailyReturn(portAlex)
-returnsCWFM <- dailyReturn(portCWMF)
-
-Return.annualized(returnsAlex, scale= 252)
-Return.annualized(returnsCWFM, scale= 252)
+Return.annualized(dailyReturn(portAlex), scale= 252)
+Return.annualized(dailyReturn(portCWMF), scale= 252)
 
 # Sharpe ratio
 SharpeRatio.annualized(returnsAlex, Rf= 0, scale= 252)
