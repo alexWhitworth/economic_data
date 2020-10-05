@@ -74,6 +74,9 @@ dat <- rbindlist(lapply(dat, function(l) {
   l[, `:=` (
     quarterly_yoy= quarterly_yoy(value)
     , index= value / idx_base
+  )][, `:=` (
+    index_SMA3= zoo::rollmean(index, k= 3, fill= NA, align= "right")
+    , index_SMA6= zoo::rollmean(index, k= 6, fill= NA, align= "right")
   )]
   return(l)
 }))
@@ -83,6 +86,9 @@ house_dat <- rbindlist(lapply(house_dat, function(l) {
   l[, `:=` (
     quarterly_yoy= quarterly_yoy(value)
     , index= value / idx_base
+  )][, `:=` (
+    index_SMA3= zoo::rollmean(index, k= 3, fill= NA, align= "right")
+    , index_SMA6= zoo::rollmean(index, k= 6, fill= NA, align= "right")
   )]
   return(l)
 }))
