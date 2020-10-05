@@ -45,7 +45,7 @@ getPortfolio <- function(ticks, begDate, endDate= NULL, type= 'Ad') {
 }
 
 # Input Date
-begDate <- '2015-10' # 2020-10
+begDate <- '2010-10' # 2020-10
 endDate <- NULL # 2030-10
 
 portAlex <- getPortfolio(c("BA", "DE", "HON", "LMT"), begDate= begDate, type='Ad')
@@ -57,15 +57,7 @@ returnsCWFM <- dailyReturn(portCWMF)
 Return.annualized(returnsAlex, scale= 252)
 Return.annualized(returnsCWFM, scale= 252)
 
-# benchmark comparisons
-getSymbols(c('VT', 'VNQ'))
-VT <- Ad(VT)[paste0(begDate, "/")]
-VNQ <- Ad(VNQ)[paste0(begDate, "/")]
-returnVT <- dailyReturn(VT)
-returnVNQ <- dailyReturn(VNQ)
-Return.annualized(returnVT, scale= 252)
-Return.annualized(returnVNQ, scale= 252)
+# Sharpe ratio
+SharpeRatio.annualized(returnsAlex, Rf= 0, scale= 252)
+SharpeRatio.annualized(returnsCWFM, Rf= 0, scale= 252)
 
-# Sharpe ratio -- InformationRatio() seems broken
-InformationRatio(returnsAlex, returnVT, scale= 252)
-InformationRatio(returnsCWFM, returnVT, scale= 252)
