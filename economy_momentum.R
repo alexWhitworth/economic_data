@@ -24,7 +24,7 @@ ggplot_series(dat, date_min= NULL, date_seq= dts, use_index= FALSE,
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Economic Variables")
 
 ggplot_series(dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.95), min(y_lims[2], 1.1)),
+              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.1)),
               facet= "wrap") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Economic Variables")
 
@@ -84,7 +84,7 @@ dts2 <- sort(seq.Date(dt_range[2], as.Date("2015-01-01"), "-1 quarter"))
 y_lims <- range(vehicle_dat[,quarterly_yoy], na.rm= TRUE)
 
 ggplot_series(vehicle_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.7), min(y_lims[2], 1.275)),
+              y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.275)),
               facet= "grid") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Vehicle Sales")
 

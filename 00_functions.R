@@ -24,7 +24,7 @@ quarterly_yoy <- function(x) {
 # @param date_seq A \code{vector} of \code{Date}s giving the x-axis breaks
 # @param use_index Logical. Do you want the quarterly_yoy series (FALSE, default) or the index?
 # @param y_range A \code{vector} of length 2 giving the y axis range
-ggplot_series <- function(dt, date_min= NULL, date_seq, 
+ggplot_series <- function(dt, date_min= NULL, date_seq, date_max= max(dt[,date]),
                           use_index= FALSE, y_range= c(0.85, 1.2),
                           facet= c("wrap", "grid")) {
   require(ggplot2)
@@ -53,6 +53,8 @@ ggplot_series <- function(dt, date_min= NULL, date_seq,
   p <- p + geom_hline(yintercept= 1, colour= "red", alpha= 0.5) +
     annotate("rect", xmin= as.Date("2007-12-01", format= "%Y-%m-%d"), 
              xmax= as.Date("2009-06-30", format= "%Y-%m-%d"), ymin= -Inf, ymax= Inf, alpha=0.1) +
+    annotate("rect", xmin= as.Date("2020-03-01", format= "%Y-%m-%d"), 
+             xmax= date_max, ymin= -Inf, ymax= Inf, alpha=0.1) +
     scale_x_date(breaks= date_seq, limits= c(date_seq[1], date_seq[length(date_seq)])) +
     theme(legend.position = "bottom",
           axis.title= element_text(face="bold", size= 12),
