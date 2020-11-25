@@ -16,28 +16,18 @@ source("01_pull_mung_data.R")
 dt_range <- range(dat[!is.na(quarterly_yoy), date])
 dts <- sort(seq.Date(dt_range[2], as.Date("2003-01-01"), "-1 year"))
 dts2 <- sort(seq.Date(dt_range[2], as.Date("2015-01-01"), "-1 quarter"))
-y_lims <- range(dat[,quarterly_yoy], na.rm= TRUE)
 
-ggplot_series(dat, date_min= NULL, date_seq= dts, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.2)),
-              facet= "wrap") +
-  labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Economic Variables")
-
+y_lims <- range(dat[date >= as.Date('2015-01-01'), quarterly_yoy], na.rm= TRUE)
 ggplot_series(dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.1)),
               facet= "wrap") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Economic Variables")
 
 # indexed values
-y_lims <- range(dat[,index], na.rm= TRUE)
-ggplot_series(dat, date_min= NULL, date_seq= dts, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.2)),
-              facet= "wrap") +
-  labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
-       title= "Indexed values of Key Economic Variables")
+y_lims <- range(dat[date >= as.Date('2015-01-01'), index], na.rm= TRUE)
 
 ggplot_series(dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.95), min(y_lims[2], 1.2)),
+              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.3)),
               facet= "wrap") +
   labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
        title= "Indexed values of Key Economic Variables")
@@ -51,26 +41,15 @@ dts <- sort(seq.Date(dt_range[2], as.Date("2003-01-01"), "-1 year"))
 dts2 <- sort(seq.Date(dt_range[2], as.Date("2015-01-01"), "-1 quarter"))
 y_lims <- range(house_dat[,quarterly_yoy], na.rm= TRUE)
 
-ggplot_series(house_dat, date_min= NULL, date_seq= dts, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.4)),
-              facet= "grid") +
-  labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Housing Data")
-
 ggplot_series(house_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.5)),
               facet= "grid") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Housing Data")
 
 # indexed values
-y_lims <- range(house_dat[,index], na.rm= TRUE)
-ggplot_series(house_dat, date_min= NULL, date_seq= dts, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.3)),
-              facet= "grid") +
-  labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
-       title= "Indexed values of Key Housing Data")
-
+y_lims <- range(house_dat[date >= as.Date('2015-01-01'), index], na.rm= TRUE)
 ggplot_series(house_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.45)),
+              y_range= c(max(y_lims[1], 0.80), min(y_lims[2], 1.6)),
               facet= "grid") +
   labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
        title= "Indexed values of Key Housing Data")
@@ -81,17 +60,19 @@ ggplot_series(house_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_in
 # quarterly rate of change YOY
 dt_range <- range(vehicle_dat[!is.na(quarterly_yoy), date])
 dts2 <- sort(seq.Date(dt_range[2], as.Date("2015-01-01"), "-1 quarter"))
-y_lims <- range(vehicle_dat[,quarterly_yoy], na.rm= TRUE)
+y_lims <- range(vehicle_dat[date >= as.Date('2015-01-01'), quarterly_yoy], na.rm= TRUE)
 
-ggplot_series(vehicle_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
+ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ], 
+              date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.275)),
               facet= "grid") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Vehicle Sales")
 
 # indexed values
-y_lims <- range(house_dat[,index], na.rm= TRUE)
-ggplot_series(vehicle_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.4)),
+y_lims <- range(vehicle_dat[date >= as.Date('2015-01-01'), index], na.rm= TRUE)
+ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ], 
+              date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= TRUE, 
+              y_range= c(max(y_lims[1], 0.5), min(y_lims[2], 1.3)),
               facet= "grid") +
   labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
        title= "Indexed values of Vehicle Sales")
