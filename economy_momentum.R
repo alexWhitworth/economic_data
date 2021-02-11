@@ -49,7 +49,7 @@ ggplot_series(house_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_in
 # indexed values
 y_lims <- range(house_dat[date >= as.Date('2015-01-01'), index], na.rm= TRUE)
 ggplot_series(house_dat, date_min= as.Date('2015-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.80), min(y_lims[2], 1.6)),
+              y_range= c(max(y_lims[1], 0.80), min(y_lims[2], 2)),
               facet= "grid") +
   labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
        title= "Indexed values of Key Housing Data")

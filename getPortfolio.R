@@ -1,4 +1,7 @@
 
+#' @title Download Portfolio Data
+#' @description Wrapper to \code{\link[quantmod]{getSymbols}} to pull data on
+#' a set of symbols
 #' @param ticks A vector of Symbols to retrieve price information on.
 #' @param begDate The beginning date for your portfolio data.
 #' @param endDate The end date for your portfolio data. Defaults to NULL
@@ -37,4 +40,52 @@ getPortfolio <- function(ticks, begDate, endDate= NULL, type= 'Ad') {
     port[,i] <- method.fn(get(ticks[i])[subCriteria])
   }
   return(xts::as.xts(port))
+}
+
+#' @title Calculation Option Expiry Dates
+#' @description Calculate date of option expirys given beginning date and length of time.
+#' @param begDate The beginning date for your portfolio data.
+#' @param ndays An integer for the number of days to search along. Defaults to 90.
+optionExpiryDt <- function(begDate, ndays= 90) {
+  begDate <- as.POSIXlt(seq(as.Date(begDate), by = 1, length.out= ndays))
+  d <- begDate[begDate$wday == 5]
+  return(as.Date(d[ave(d$mon, list(d$mon, d$year), FUN= seq_along) == 3]))
+}
+
+
+#' @title Download Option Chain
+#' @description Wrapper to \code{\link[quantmod]{getOptionChain}} to pull next \code{n} time periods
+#' of option data. 
+#' @param symbol Stock symbol
+#' @param n Number of future dates to pull option data on.
+#' @param which One of \code{c('calls', 'puts')}.
+#' @param strikes Optional bounds for strike prices to pull data on. Input as \code{c(<min>, <max>)}
+#' @return A \code{data.table} of pricing data.
+optionChain <- function(symbol, n= 3, which= c('calls', 'puts'),
+                        strikes= NULL) {
+  require(data.table)
+  x <- quantmod::getOptionChain(symbol, NULL)
+  x <- x[1:n]
+  out <- data.table::rbindlist(mapply(FUN= function(DT, nms) {
+    return(
+      data.table::data.table(
+        dt_name= nms
+        , strike= DT$Strike
+        , last= DT$Last
+        , bid= DT$Bid
+        , ask= DT$Ask
+        , vol= DT$Vol
+        , oi= DT$OI
+        
+      )
+    )
+  }, DT= lapply(x, '[[', which), nms= as.list(names(x[1:n]))
+  , SIMPLIFY = FALSE))
+  
+  # subset to strike prices
+  if (!is.null(strikes) && length(strikes) == 2) {
+    out <- out[strike >= strikes[1] & strike <= strikes[2],]
+  }
+  
+  return(out)
 }
