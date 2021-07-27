@@ -54,7 +54,7 @@ ggplot_series <- function(dt, date_min= NULL, date_seq, date_max= max(dt[,date])
     annotate("rect", xmin= as.Date("2007-12-01", format= "%Y-%m-%d"), 
              xmax= as.Date("2009-06-30", format= "%Y-%m-%d"), ymin= -Inf, ymax= Inf, alpha=0.1) +
     annotate("rect", xmin= as.Date("2020-03-01", format= "%Y-%m-%d"), 
-             xmax= date_max, ymin= -Inf, ymax= Inf, alpha=0.1) +
+             xmax= as.Date('2020-04-30'), ymin= -Inf, ymax= Inf, alpha=0.1) +
     scale_x_date(breaks= date_seq, limits= c(date_seq[1], date_seq[length(date_seq)])) +
     theme(legend.position = "bottom",
           axis.title= element_text(face="bold", size= 12),
