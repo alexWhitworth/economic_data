@@ -35,6 +35,10 @@ retail_sales <- fredr(series_id = "RSXFS", observation_start= as.Date("2003-01-0
 # Units:  Index 2012=100, Seasonally Adjusted
 indpro <- fredr(series_id = "INDPRO", observation_start= as.Date("2003-01-01"), units= "lin")
 
+# CPI_u deflated retail sales
+rrs <- merge(CPI_u[, c(1,3)], retail_sales[, c(1,3)], by= 'date')
+rrs$rrs <- rrs$value.y / rrs$value.x
+
 # MEASURES OF HOUSING
 #----------------------------
 # Units:  Thousands of Units, Seasonally Adjusted Annual Rate
@@ -56,6 +60,7 @@ dat <- list(
   , data.table(date= real_PCE$date, series= "real_consumption", value= real_PCE$value)
   , data.table(date= retail_sales$date, series= "retail_sales", value= retail_sales$value)
   , data.table(date= indpro$date, series= "industrial_prod", value= indpro$value)
+  , data.table(date= rrs$date, series= "real_retail_sales", value= rrs$rrs)
 )
 
 house_dat <- list(
