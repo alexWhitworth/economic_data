@@ -32,12 +32,17 @@ real_PCE <- fredr(series_id = "PCEC96", observation_start= as.Date("2003-01-01")
 #----------------------------
 # Units:  Millions of Dollars, Seasonally Adjusted
 retail_sales <- fredr(series_id = "RSXFS", observation_start= as.Date("2003-01-01"), units= "lin")
-# Units:  Index 2012=100, Seasonally Adjusted
-indpro <- fredr(series_id = "INDPRO", observation_start= as.Date("2003-01-01"), units= "lin")
-
 # CPI_u deflated retail sales
 rrs <- merge(CPI_u[, c(1,3)], retail_sales[, c(1,3)], by= 'date')
 rrs$rrs <- rrs$value.y / rrs$value.x
+# Units:  Index 2012=100, Seasonally Adjusted
+# REAL output of (manufacturing + industrial sector, mining, and utilities industries)
+indpro <- fredr(series_id = "INDPRO", observation_start= as.Date("2003-01-01"), units= "lin")
+# Units: Billions of Dollars, Seasonally Adjusted Annual Rate
+# measured QUARTERLY
+# Corporate profits before tax (exc. IVA + CCAdj)
+cp <- fredr(series_id = "A053RC1Q027SBEA", observation_start= as.Date("2003-01-01"), units= "lin")
+cp$date <- lubridate::`%m+%`(cp$date, months(3))
 
 # MEASURES OF HOUSING
 #----------------------------
@@ -46,7 +51,7 @@ housing_starts <- fredr(series_id = "HOUST", observation_start= as.Date("2003-01
 # Units:  Thousands, Seasonally Adjusted Annual Rate
 SFH_new <- fredr(series_id = "HSN1F", observation_start= as.Date("2003-01-01"), units= "lin")
 # QUARTERLY. Percent, Seasonally Adjusted
-#mort_pmt_pct_dispinc <- fredr(series_id = "TDSP", observation_start= as.Date("2003-01-01"), units= "lin")
+# mort_pmt_pct_dispinc <- fredr(series_id = "TDSP", observation_start= as.Date("2003-01-01"), units= "lin")
 # QUARTERLY. Percent, Seasonally Adjusted
 permits <- fredr(series_id = "PERMIT", observation_start= as.Date("2003-01-01"), units= "lin")
 
@@ -58,9 +63,10 @@ dat <- list(
   , data.table(date= real_inc$date, series= "real_income", value= real_inc$value)
   , data.table(date= real_inc_disposable$date, series= "real_disposable_inc", value= real_inc_disposable$value)
   , data.table(date= real_PCE$date, series= "real_consumption", value= real_PCE$value)
-  , data.table(date= retail_sales$date, series= "retail_sales", value= retail_sales$value)
+  # , data.table(date= retail_sales$date, series= "retail_sales", value= retail_sales$value)
   , data.table(date= indpro$date, series= "industrial_prod", value= indpro$value)
   , data.table(date= rrs$date, series= "real_retail_sales", value= rrs$rrs)
+  , data.table(date= cp$date, series= "corp_profit", value= cp$value)
 )
 
 house_dat <- list(

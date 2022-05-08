@@ -19,7 +19,7 @@ dts2 <- sort(seq.Date(dt_range[2], as.Date("2018-01-01"), "-1 quarter"))
 
 y_lims <- range(dat[date >= as.Date('2018-01-01'), quarterly_yoy], na.rm= TRUE)
 ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= FALSE, 
-              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.35)),
+              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.4)),
               facet= "wrap") +
   labs(x= "Date", y= "Rate of Change", title= "Quarterly YoY growth in Key Economic Variables")
 
@@ -27,7 +27,7 @@ ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= F
 y_lims <- range(dat[date >= as.Date('2018-01-01'), index], na.rm= TRUE)
 
 ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.85), min(y_lims[2], 1.5)),
+              y_range= c(max(y_lims[1], 0.8), min(y_lims[2], 1.5)),
               facet= "wrap") +
   labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
        title= "Indexed values of Key Economic Variables")
