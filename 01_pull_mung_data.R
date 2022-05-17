@@ -86,8 +86,10 @@ dat <- rbindlist(lapply(dat, function(l) {
     quarterly_yoy= quarterly_yoy(value)
     , index= value / idx_base
   )][, `:=` (
-    index_SMA3= zoo::rollmean(index, k= 3, fill= NA, align= "right")
-    , index_SMA6= zoo::rollmean(index, k= 6, fill= NA, align= "right")
+    index_SMA3= ifelse(series == 'corp_profit' # quarterly, not monthly data
+                       , index, zoo::rollmean(index, k= 3, fill= NA, align= "right"))
+    , index_SMA6= ifelse(series == 'corp_profit'
+                       , index, zoo::rollmean(index, k= 6, fill= NA, align= "right"))
   )]
   return(l)
 }))
