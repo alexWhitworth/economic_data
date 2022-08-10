@@ -81,7 +81,7 @@ house_dat <- list(
 )
 
 dat <- rbindlist(lapply(dat, function(l) {
-  idx_base <- l[date == '2015-01-01', value]
+  idx_base <- l[date == '2018-01-01', value]
   l[, `:=` (
     quarterly_yoy= quarterly_yoy(value)
     , index= value / idx_base
@@ -95,7 +95,7 @@ dat <- rbindlist(lapply(dat, function(l) {
 }))
 
 house_dat <- rbindlist(lapply(house_dat, function(l) {
-  idx_base <- l[date == '2015-01-01', value]
+  idx_base <- l[date == '2018-01-01', value]
   l[, `:=` (
     quarterly_yoy= quarterly_yoy(value)
     , index= value / idx_base

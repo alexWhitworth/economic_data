@@ -27,9 +27,9 @@ ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= F
 y_lims <- range(dat[date >= as.Date('2018-01-01'), index], na.rm= TRUE)
 
 ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.8), min(y_lims[2], 1.5)),
+              y_range= c(max(y_lims[1], 0.8), min(y_lims[2], 1.3)),
               facet= "wrap") +
-  labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
+  labs(x= "Date", y= "Index (2018-01-01 == 1.00)", 
        title= "Indexed values of Key Economic Variables")
 
 #----------------------------------------------------------
@@ -39,8 +39,8 @@ ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= T
 dt_range <- range(house_dat[!is.na(quarterly_yoy), date])
 dts <- sort(seq.Date(dt_range[2], as.Date("2003-01-01"), "-1 year"))
 dts2 <- sort(seq.Date(dt_range[2], as.Date("2018-01-01"), "-1 quarter"))
-y_lims <- range(house_dat[,quarterly_yoy], na.rm= TRUE)
 
+y_lims <- range(house_dat[,quarterly_yoy], na.rm= TRUE)
 ggplot_series(house_dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.70), min(y_lims[2], 1.5)),
               facet= "grid") +
@@ -51,7 +51,7 @@ y_lims <- range(house_dat[date >= as.Date('2018-01-01'), index], na.rm= TRUE)
 ggplot_series(house_dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= TRUE, 
               y_range= c(max(y_lims[1], 0.80), min(y_lims[2], 2)),
               facet= "grid") +
-  labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
+  labs(x= "Date", y= "Index (2018-01-01 == 1.00)", 
        title= "Indexed values of Key Housing Data")
 
 #----------------------------------------------------------
@@ -60,8 +60,8 @@ ggplot_series(house_dat, date_min= as.Date('2018-01-01'), date_seq= dts2, use_in
 # quarterly rate of change YOY
 dt_range <- range(vehicle_dat[!is.na(quarterly_yoy), date])
 dts2 <- sort(seq.Date(dt_range[2], as.Date("2018-01-01"), "-1 quarter"))
-y_lims <- range(vehicle_dat[date >= as.Date('2018-01-01'), quarterly_yoy], na.rm= TRUE)
 
+y_lims <- range(vehicle_dat[date >= as.Date('2018-01-01'), quarterly_yoy], na.rm= TRUE)
 ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ], 
               date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.75)),
@@ -72,7 +72,7 @@ ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ],
 y_lims <- range(vehicle_dat[date >= as.Date('2018-01-01'), index], na.rm= TRUE)
 ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ], 
               date_min= as.Date('2018-01-01'), date_seq= dts2, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.5), min(y_lims[2], 1.3)),
+              y_range= c(max(y_lims[1], 0.7), min(y_lims[2], 1.4)),
               facet= "grid") +
-  labs(x= "Date", y= "Index (2015-01-01 == 1.00)", 
+  labs(x= "Date", y= "Index (2018-01-01 == 1.00)", 
        title= "Indexed values of Vehicle Sales")
