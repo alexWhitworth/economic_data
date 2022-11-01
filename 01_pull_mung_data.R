@@ -108,6 +108,9 @@ house_dat <- rbindlist(lapply(house_dat, function(l) {
 
 vehicle_dat <- house_dat[series %in% c('autos', 'lw_trucks', 'hw_trucks', 'lw_vehicles'), ]
 house_dat <- house_dat[!(series %in% c('autos', 'lw_trucks', 'hw_trucks', 'lw_vehicles')), ]
+corp_profit <- dat[series == 'corp_profit',]
+dat <- dat[series != 'corp_profit',]
 
 rm(avg_earn, CPI_u, emp, indpro, quarterly_yoy, autos, lw_trucks, hw_trucks, real_inc, real_PCE, 
    real_inc_disposable, retail_sales, housing_starts, SFH_new, permits, lw_vehicles) # mort_pmt_pct_dispinc
+rm(cp, rrs)
