@@ -52,7 +52,6 @@ ggplot_series(corp_profit, date_min= as.Date('2013-01-01'), date_seq= yr_dts, us
 #----------------------------------------------------------
 # quarterly rate of change YOY
 dt_range <- range(house_dat[!is.na(quarterly_yoy), date])
-qtr_dts <- sort(seq.Date(dt_range[2], as.Date("2018-01-01"), "-1 quarter"))
 y_lims <- range(house_dat[,quarterly_yoy], na.rm= TRUE)
 
 ggplot_series(house_dat, date_min= as.Date('2018-01-01'), date_seq= qtr_dts, use_index= FALSE, 
@@ -73,9 +72,8 @@ ggplot_series(house_dat, date_min= as.Date('2018-01-01'), date_seq= qtr_dts, use
 #----------------------------------------------------------
 # quarterly rate of change YOY
 dt_range <- range(vehicle_dat[!is.na(quarterly_yoy), date])
-qtr_dts <- sort(seq.Date(dt_range[2], as.Date("2018-01-01"), "-1 quarter"))
-
 y_lims <- range(vehicle_dat[date >= as.Date('2018-01-01'), quarterly_yoy], na.rm= TRUE)
+
 ggplot_series(vehicle_dat[series %in% c('lw_vehicles', 'hw_trucks'), ], 
               date_min= as.Date('2018-01-01'), date_seq= qtr_dts, use_index= FALSE, 
               y_range= c(max(y_lims[1], 0.6), min(y_lims[2], 1.75)),
