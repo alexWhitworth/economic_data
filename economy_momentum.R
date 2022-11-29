@@ -25,7 +25,7 @@ ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= qtr_dts, use_index
 # indexed values
 y_lims <- range(dat[date >= as.Date('2018-01-01'), index], na.rm= TRUE)
 ggplot_series(dat, date_min= as.Date('2018-01-01'), date_seq= qtr_dts, use_index= TRUE, 
-              y_range= c(max(y_lims[1], 0.8), min(y_lims[2], 1.3)),
+              y_range= c(max(y_lims[1], 0.8), min(y_lims[2], 1.25)),
               facet= "wrap") +
   labs(x= "Date", y= "Index (2018-01-01 == 1.00)", 
        title= "Indexed values of Key Economic Variables")

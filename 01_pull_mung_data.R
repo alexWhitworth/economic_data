@@ -5,8 +5,7 @@ source("00_functions.R")
 
 # 01. Pull data from FRED API
 #----------------------------------------------------------
-# FRED API key == "5080ca44da1ccf74fda114d6f9650645"
-fredr::fredr_set_key("5080ca44da1ccf74fda114d6f9650645")
+fredr::fredr_set_key("..redacted..")
 
 ## MEASURES OF EMPLOYMENT AND INCOME
 #----------------------------
